@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implementando um Servidor Web Usando Docker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        code {
+            display: block;
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Implementando um Servidor Web Usando Docker</h1>
+    <h2>Passo 1: Crie um repositório público no GitHub (asa-web)</h2>
+    <ul>
+        <li>
+            <code>
+                git clone https://github.com/seu-usuario/asa-web.git
+            </code>
+        </li>
+    </ul>
+    <h2>Passo 2: Crie um Dockerfile</h2>
+    <ul>
+        <li>
+            <code>
+                # Use uma runtime oficial do nginx como a imagem pai<br>
+                FROM nginx:latest<br>
+                
+                # Defina o diretório de trabalho no container como /app<br>
+                WORKDIR /app<br>
+                
+                # Copie o conteúdo do diretório atual para o container em /app<br>
+                COPY . /app<br>
+                # Substitua o site padrão do nginx<br>
+                RUN rm -rf /usr/share/nginx/html/*<br>
+                
+                # Copie os arquivos estáticos do seu site para o novo diretório<br>
+                COPY . /usr/share/nginx/html<br>
+                
+                # Exponha a porta 80 para o host do Docker, para que possamos acessar o servidor web a partir do host<br>
+                EXPOSE 80
+            </code>
+        </li>
+    </ul>
+    <h2>Passo 3: Crie uma página HTML personalizada</h2>
+    <ul>
+        <li>
+            <code>
+                <!DOCTYPE html><br>
+                <html lang="en"><br>
+                <head><br>
+                    <meta charset="UTF-8"><br>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0"><br>
+                    <title>Meu Servidor Web</title><br>
+                </head><br>
+                <body><br>
+                    <h1>Olá, mundo!</h1><br>
+                    <p>Este é meu servidor web Docker!</p><br>
+                </body><br>
+                </html><br>
+            </code>
+        </li>
+    </ul>
+    <h2>Passo 4: Crie um script shell para criação do container</h2>
+    <ul>
+        <li>
+            <code>
+                # Construa a imagem do Docker<br>
+                docker build -t asa-web .<br>
+                
+                # Execute o container do Docker<br>
+                docker run -d -p 8080:80 asa-web<br>
+            </code>
+        </li>
+    </ul>
+    <h2>Passo 5: Envie seucódigo para o GitHub</h2>
+    <ul>
+        <li>
+            <code>
+                git add .<br>
+                git commit -m "Adicionando arquivos"<br>
+                git push origin master<br>
+            </code>
+        </li>
+    </ul>
+</body>
+</html>
